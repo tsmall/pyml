@@ -1,0 +1,7 @@
+- Support "class" attributes
+- Change from "data_x" to "data-x"
+- Support non-closing tags
+- Support doctype
+- Pretty printing
+- Support attributes without values (like "selected")
+- Add all common elements
