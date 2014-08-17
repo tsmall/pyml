@@ -82,3 +82,17 @@ class NonemptyElementTests(TestCase):
             div(id='foo')(),
             '<div id="foo"></div>'
         )
+
+    def test_attributes_reserved_words(self):
+        """Should be able to avoid reserved words with leading `_`."""
+        self.assertEqual(
+            div(_class='test')(),
+            '<div class="test"></div>'
+        )
+
+    def test_attributes_hyphenated(self):
+        """Should be able to generate hyphenated attributes."""
+        self.assertEqual(
+            div(data_id="1")("Test"),
+            '<div data-id="1">Test</div>'
+        )

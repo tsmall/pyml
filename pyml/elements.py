@@ -18,7 +18,17 @@ class Element(object):
         if not self.attributes:
             return ''
 
-        kv_pairs = ('{}="{}"'.format(k, v) for k, v in self.attributes.items())
+        kv_pairs = (
+            '{}="{}"'.format(_fix_attribute_name(k), v)
+            for k, v in self.attributes.items()
+        )
         return ' ' + ' '.join(kv_pairs)
 
 
+def _fix_attribute_name(name):
+    if name.startswith('_'):
+        return name[1:]
+    elif '_' in name:
+        return name.replace('_', '-')
+    else:
+        return name
