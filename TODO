@@ -1,7 +1,11 @@
-- Support "class" attributes
-- Change from "data_x" to "data-x"
-- Support non-closing tags
 - Support doctype
 - Pretty printing
 - Support attributes without values (like "selected")
 - Add all common elements
+- Better syntax for rendering with attributes but no contents
+- Docstrings for everyone!
+- Explicit render stage with intermediate representation?
+
+- Documentation:
+  - Using leading `_` for reserved word attributes
+  - Replace other `_` chars with `-` chars
