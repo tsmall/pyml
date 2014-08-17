@@ -15,3 +15,24 @@ There are a number of reasons this is a better way to create HTML.
 * Variable interpolation is easy: just use variables!
 * Your code and template creation logic is in one place.
 * It's more DRY.
+
+
+Setting Up Your Dev Environment
+-------------------------------
+
+This project uses `Vagrant <http://www.vagrantup.com/>`_, so getting
+set up should be a snap. Just make sure you have Vagrant installed and
+then run this command::
+
+  $ vagrant up
+
+
+Running the Unit Tests
+----------------------
+
+Once your dev environment is up and running, these commands will run
+the full test suite::
+
+  $ vagrant ssh
+  $ cd /vagrant
+  $ nosetests

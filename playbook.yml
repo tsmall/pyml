@@ -1,0 +1,15 @@
+---
+- hosts: all
+  tasks:
+    - name: ensure python and related tools are installed
+      apt: name={{ item }} update_cache=yes state=present
+      sudo: yes
+      with_items:
+        - python
+        - python-pip
+    - name: ensure python packages are installed
+      pip: name={{ item }} state=present
+      sudo: yes
+      with_items:
+        - nose
+        - virtualenv
