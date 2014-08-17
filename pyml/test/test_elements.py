@@ -96,3 +96,29 @@ class NonemptyElementTests(TestCase):
             div(data_id="1")("Test"),
             '<div data-id="1">Test</div>'
         )
+
+
+class EmptyElementTests(TestCase):
+
+    """Tests for the empty elements."""
+
+    def test_no_attributes(self):
+        """Should be able to render an element without attributes."""
+        self.assertEqual(
+            br(),
+            '<br>'
+        )
+
+    def test_attributes(self):
+        """Empty elements should support attributes."""
+        self.assertEqual(
+            meta(charset='utf-8')(),
+            '<meta charset="utf-8">'
+        )
+
+    def test_contents_ignored(self):
+        """Empty elements can't have contents, so they should be ignored."""
+        self.assertEqual(
+            br('Hi!'),
+            '<br>'
+        )

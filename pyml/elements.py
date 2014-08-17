@@ -1,18 +1,26 @@
 class Element(object):
 
-    def __init__(self, tag_name, **attributes):
+    def __init__(self, tag_name, is_empty=False, **attributes):
         self.tag_name = tag_name
         self.attributes = attributes
+        self.is_empty = is_empty
 
     def __call__(self, *args, **kwargs):
         if kwargs:
-            return Element(self.tag_name, **kwargs)
+            return Element(self.tag_name, self.is_empty, **kwargs)
         else:
-            return '<{tag}{attributes}>{contents}</{tag}>'.format(
+            return '<{tag}{attributes}>{contents}{closing_tag}'.format(
                 tag=self.tag_name,
                 attributes=self._render_attributes(),
-                contents=''.join(args)
+                contents=self._render_contents(*args),
+                closing_tag=self.closing_tag,
             )
+
+    @property
+    def closing_tag(self):
+        if self.is_empty:
+            return ''
+        return '</{}>'.format(self.tag_name)
 
     def _render_attributes(self):
         if not self.attributes:
@@ -23,6 +31,11 @@ class Element(object):
             for k, v in self.attributes.items()
         )
         return ' ' + ' '.join(kv_pairs)
+
+    def _render_contents(self, *contents):
+        if self.is_empty:
+            return ''
+        return ''.join(contents)
 
 
 def _fix_attribute_name(name):
