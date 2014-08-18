@@ -1,3 +1,6 @@
+import warnings
+
+
 class Element(object):
 
     def __init__(self, tag_name, is_empty=False, **attributes):
@@ -40,6 +43,11 @@ class Element(object):
 
     def _render_contents(self, *contents):
         if self.is_empty:
+            if contents:
+                warnings.warn(
+                    "Attempting to add contents to an empty element",
+                    UserWarning
+                )
             return ''
         return ''.join(contents)
 

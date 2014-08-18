@@ -1,4 +1,5 @@
 from unittest import TestCase
+import warnings
 
 from pyml import *
 
@@ -66,7 +67,7 @@ class NonemptyElementTests(TestCase):
         )
 
     def test_contents(self):
-        """Should be able to render with simple string contents."""
+        """Should be able to render with contents."""
         self.assertEqual(
             p('Hello world.'),
             '<p>Hello world.</p>'
@@ -116,9 +117,15 @@ class EmptyElementTests(TestCase):
             '<meta charset="utf-8">'
         )
 
-    def test_contents_ignored(self):
-        """Empty elements can't have contents, so they should be ignored."""
-        self.assertEqual(
-            br('Hi!'),
-            '<br>'
-        )
+    def test_warning_on_contents(self):
+        """Empty elements can't have contents, so trying causes a warning."""
+        with warnings.catch_warnings(record=True) as w:
+            br('Hi!')
+            self.assertEqual(len(w), 1)
+            self.assertTrue(issubclass(w[0].category, UserWarning))
+
+    def test_no_warning_if_no_contents(self):
+        """Shouldn't issue a warning if there are no contents."""
+        with warnings.catch_warnings(record=True) as w:
+            br()
+            self.assertEqual(len(w), 0)
