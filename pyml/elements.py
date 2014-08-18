@@ -9,12 +9,18 @@ class Element(object):
         if kwargs:
             return Element(self.tag_name, self.is_empty, **kwargs)
         else:
-            return '<{tag}{attributes}>{contents}{closing_tag}'.format(
-                tag=self.tag_name,
-                attributes=self._render_attributes(),
+            return '{opening_tag}{contents}{closing_tag}'.format(
+                opening_tag=self.opening_tag,
                 contents=self._render_contents(*args),
                 closing_tag=self.closing_tag,
             )
+
+    @property
+    def opening_tag(self):
+        return '<{tag}{attributes}>'.format(
+            tag=self.tag_name,
+            attributes=self._render_attributes(),
+        )
 
     @property
     def closing_tag(self):
